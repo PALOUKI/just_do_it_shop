@@ -39,10 +39,31 @@ class CategoryTile extends StatelessWidget {
           Center(
             child: ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              child: Image.asset(
+              child: Image.network(
                 categories[index].imagePath,
                 fit: BoxFit.cover,
                 height: 150,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 150,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.error_outline, color: Colors.grey[500]),
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 150,
+                    color: Colors.grey[200],
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

@@ -143,7 +143,7 @@ class _CartItemState extends State<CartItem> {
                     icon: Icon(Icons.delete, color: Colors.red),
                   ),
                   Text(
-                    '\$${widget.product.price!.toStringAsFixed(2)}',
+                    '\$${widget.product.price.toStringAsFixed(2)}',
                     style: AppTextStyles.bodyText1.copyWith(
                       fontSize: 17,
                       color: Theme.of(context).colorScheme.onPrimary,
