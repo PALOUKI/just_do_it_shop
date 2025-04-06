@@ -177,12 +177,17 @@ class _HomePageState extends State<HomePage> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Rechercher",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(
+                          color: Colors.deepPurpleAccent
+                        ),
                       ),
                     ),
                   ),
 
-                  Icon(Icons.search, color: Colors.black),
+                  Icon(
+                      Icons.search,
+                      color: Colors.deepPurpleAccent
+                  ),
                 ],
               ),
             ),
@@ -212,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 20,
                     ),
                   ),
-                  Text("Voir tout", style: TextStyle(color: Colors.purple)),
+                  Text("Voir tout", style: TextStyle(color: Colors.deepPurpleAccent)),
                 ],
               ),
             ),

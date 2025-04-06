@@ -7,7 +7,7 @@ ThemeData lightMode = ThemeData(
     primary: Colors.grey.shade900, // text en noir
     secondary: Colors.white,
     tertiary:  Colors.grey.shade500,
-    onPrimary: Colors.deepPurple,
+    onPrimary: Colors.deepPurpleAccent,
     onSecondary: Colors.white,
   )
 );
@@ -23,6 +23,6 @@ ThemeData darkMode = ThemeData(
         secondary: Colors.grey.shade900,
         tertiary: Colors.grey.shade700,
         onPrimary: Colors.white,
-        onSecondary: Colors.grey.shade500,
+        onSecondary: Colors.grey.shade700,
     ),
 );

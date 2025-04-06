@@ -126,7 +126,7 @@ class _CategoryPageState extends State<CategoryPage> {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  RouteName.homePage,
+                  RouteName.navigation,
                   arguments: 0,
                 );
               },

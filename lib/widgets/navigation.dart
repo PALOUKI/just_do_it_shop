@@ -167,6 +167,7 @@ class _NavigationState extends State<Navigation> {
         ),
       ),
       bottomNavigationBar: GoogleNavBar(
+        selectedIndex: widget.selectedIndex,
         onTabChange: (index) => onTabChange(index),
       ),
       body: _pages[widget.selectedIndex],

@@ -54,7 +54,7 @@ class _IntroPageState extends State<IntroPage> {
                         onPressed: (){
                             Navigator.pushNamed(
                                 context,
-                              RouteName.homePage,
+                              RouteName.navigation,
                               arguments: 0
                             );
                         },

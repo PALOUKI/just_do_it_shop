@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:just_do_it_shop/core/core.dart';
 import 'package:just_do_it_shop/widgets/detail_page/available_size.dart';
 import '../providers/cart_provider.dart';
 import '../models/Product.dart';
 import '../providers/favorite_provider.dart';
 import '../widgets/detail_page/available_color.dart';
+import '../widgets/navigation.dart';
 
 class DetailPage extends StatefulWidget {
   final Product product;
@@ -33,10 +35,11 @@ class _DetailPageState extends State<DetailPage> {
               actions: [
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.pushNamed(
                       context,
-                      RouteName.cartPage,
-                      arguments: false,
+                      RouteName.navigation,
+                      arguments: 2,
                     );
                   },
                   child: Text('Panier'),
@@ -50,6 +53,7 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
       );
+
     }
 
     return Scaffold(
@@ -63,9 +67,9 @@ class _DetailPageState extends State<DetailPage> {
                 children: [
                   Center(
                     child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      height: 220,
-                      width: 220,
+                      margin: EdgeInsets.only(top: getHeight(50)),
+                      height: getHeight(220),
+                      width: getWidth(220),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.deepPurple.shade200,
@@ -80,18 +84,18 @@ class _DetailPageState extends State<DetailPage> {
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(top: getHeight(30)),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiary,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(getSize(30)),
+                      topRight: Radius.circular(getSize(30)),
                     ),
                     border: Border(
                       top: BorderSide(
                         color: Theme.of(context).colorScheme.onPrimary,
-                        width: 3,
+                        width: getWidth(3),
                       ),
                     ),
                   ),
@@ -135,6 +139,47 @@ class _DetailPageState extends State<DetailPage> {
                       //TODO: size of the model
                       Padding(
                         padding: EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Apprécier",
+                                  style: AppTextStyles.headline3.copyWith(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: getHeight(4),),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                RatingBar.builder(
+                                    initialRating: 4,
+                                    minRating: 1,
+                                    itemSize: getSize(25),
+                                    direction: Axis.horizontal,
+                                    itemCount: 5,
+                                    itemPadding: EdgeInsets.symmetric(horizontal: 4),
+                                    itemBuilder: (context, index)
+                                    => Icon(
+                                      Icons.star,
+                                      color: Colors.yellowAccent,
+                                    ),
+                                    onRatingUpdate: (index){
+
+                                    }
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -268,74 +313,64 @@ class _DetailPageState extends State<DetailPage> {
         height: MediaQuery.of(context).size.height / 10,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+            topLeft: Radius.circular(getSize(15)),
+            topRight: Radius.circular(getSize(15)),
           ),
           color: Theme.of(context).colorScheme.surface,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    "Ajouter au panier",
-                    style: AppTextStyles.subtitle1.copyWith(
-                      color: Colors.white,
-                      fontSize: getSize(20),
+            GestureDetector(
+              onTap: (){
+                  addClothToCart(widget.product);
+              },
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "Ajouter au panier",
+                      style: AppTextStyles.subtitle1.copyWith(
+                        color: Colors.white,
+                        fontSize: getSize(20),
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.shopping_cart_checkout,
-                    color: Colors.white,
-                    size: getSize(35),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.tertiary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.shopping_bag,
-                    color: Colors.white,
-                    size: getSize(35),
-                  ),
-                ],
-              ),
-            ),
-
-            /*ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.tertiary)
-              ),
-                onPressed: () => addClothToCart(widget.product),
-              label: Text(
-                  'Ajouter',
-                style: AppTextStyles.bodyText1.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold
+                    Icon(
+                      Icons.shopping_cart_checkout,
+                      color: Colors.white,
+                      size: getSize(35),
+                    ),
+                  ],
                 ),
               ),
-              icon: Icon(
-                  Icons.shopping_cart,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            )
+            ),
 
-             */
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, RouteName.navigation, arguments: 2);
+              },
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.shopping_bag,
+                      color: Colors.white,
+                      size: getSize(35),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

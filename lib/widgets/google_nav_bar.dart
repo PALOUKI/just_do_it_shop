@@ -3,10 +3,12 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class GoogleNavBar extends StatefulWidget {
   final Function(int)? onTabChange;
+  final int selectedIndex;
 
    GoogleNavBar({
     super.key,
     required this.onTabChange,
+     required this.selectedIndex
   });
 
   @override
@@ -31,11 +33,12 @@ class _GoogleNavBarState extends State<GoogleNavBar> {
           duration: Duration(milliseconds: 900), // tab animation duration
           gap: 8, // the tab button gap between icon and text
           color: Colors.grey[800], // unselected icon color
-          activeColor: Colors.purple, // selected icon and text color
+          activeColor: Colors.deepPurpleAccent, // selected icon and text color
           iconSize: 24, // tab button icon size
           tabBackgroundColor: Colors.white, // selected tab background color
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // navigation bar padding
           onTabChange: widget.onTabChange,
+          selectedIndex: widget.selectedIndex,
           tabs: [
             GButton(
               icon: Icons.home,

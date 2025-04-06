@@ -14,12 +14,6 @@ class CartProvider with ChangeNotifier{
     return userCart;
   }
 
-  //add item in cart
-  void addItemToCart(Product item){
-    userCart.add(item);
-    notifyListeners();
-  }
-
   //remove item from cart
   void removeItemFromCart(Product item){
     userCart.remove(item);
@@ -37,8 +31,22 @@ class CartProvider with ChangeNotifier{
     notifyListeners();
   }
 
-   incrementQuantity(int index) => userCart[index].quantity++;
-   decrementQuantity(int index) => userCart[index].quantity--;
+  void incrementQuantity(int index) {
+    userCart[index].quantity++;
+    notifyListeners();
+  }
+
+  void decrementQuantity(int index) {
+    if (userCart[index].quantity > 1) {
+      userCart[index].quantity--;
+    } else {
+      userCart.removeAt(index);
+    }
+    notifyListeners();
+  }
+
+
+
 
   // get the total price
   double get getTotalPrice {

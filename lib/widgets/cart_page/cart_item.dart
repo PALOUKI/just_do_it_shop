@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/models/Product.dart';
 import 'package:provider/provider.dart';
-
 import '../../core/core.dart';
 import '../../providers/cart_provider.dart';
 
 class CartItem extends StatefulWidget {
   Product product;
-  void Function(int)? incrementQuantity;
-  void Function(int)? decrementQuantity;
+  final int index;
 
    CartItem({
       super.key,
       required this.product,
-      required this.incrementQuantity,
-      required this.decrementQuantity
+     required this.index
    });
 
   @override
@@ -22,105 +19,142 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-
-  void removeItemFromCart(){
-    Provider.of<CartProvider>(context, listen: false).removeItemFromCart(widget.product);
-  }
-
   @override
   Widget build(BuildContext context) {
     AppConfigSize.init(context);
-    return Container(
-        margin: EdgeInsets.only(bottom: 10, left: 15, right: 15),
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-            borderRadius: BorderRadius.circular(10)
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: ListTile(
-            leading: Image.asset(
-                widget.product.imagePath,
-              fit: BoxFit.cover,
-            ),
-            title: Text(
-                widget.product.name,
-              style: AppTextStyles.subtitle1.copyWith(
-                color: Colors.grey[900],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Row(
-              children: [
-                Text(
-                    '\$${widget.product.price!.toStringAsFixed(2)}',
-                  style: AppTextStyles.bodyText1.copyWith(
-                      color: Colors.grey.shade500,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  /*TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                
-                   */
+
+
+    return Consumer<CartProvider>(
+        builder: (context, cartProvider, child)
+        => Container(
+          padding: EdgeInsets.all(12),
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(color: Colors.black12, blurRadius: 10),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Image de la chaussure
+              /*Container(
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                  color: Colors.deepPurpleAccent, // Couleur du cercle violet
+                  shape: BoxShape.circle,
                 ),
-                SizedBox(width: getWidth(40),),
-                Text(
-                    "x${widget.product.quantity.toString()}",
-                  style: AppTextStyles.subtitle2.copyWith(
-                    color: Colors.deepOrangeAccent,
-                    fontWeight: FontWeight.bold
+                padding: EdgeInsets.all(6), // Pour laisser un petit espace entre l'image et le bord
+                child: ClipOval(
+                  child: Image.asset(
+                    widget.product.imagePath,
+                    fit: BoxFit.cover,
                   ),
-                )
-              ],
-            ),
-           trailing: SizedBox(
-             width: 105,
-             child: Column(
-               children: [
-                 Row(
-                   children: [
-                     IconButton(
-                         onPressed: (){
-                           widget.incrementQuantity;
-                         },
-                         icon: Icon(Icons.add, color: Colors.deepOrangeAccent, size: getSize(20),)
-                     ),
-                     Text(
-                         widget.product.quantity.toString(),
-                       style: AppTextStyles.bodyText1.copyWith(
-                         fontWeight: FontWeight.bold
-                       ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(bottom: 8.0),
-                       child: IconButton(
-                           onPressed: (){
-                             widget.decrementQuantity;
-                           },
-                           icon: Icon(Icons.minimize_rounded, color: Colors.redAccent, size: getSize(20),)
-                       ),
-                     ),
-                   ],
-                 ),
-               
-               ],
-             ),
-           ),
+                ),
+              ),
 
+               */
+              SizedBox(
+                height: 80,
+                width: 80,
+                child: Stack(
+                  clipBehavior: Clip.none, // Permet à l'image de dépasser le cercle
+                  children: [
+                    // Cercle violet
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurpleAccent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    // Image qui peut dépasser
+                    Positioned(
+                      top: -10, // Tu peux ajuster le débordement ici
+                      left: -10,
+                      right: -10,
+                      bottom: -10,
+                      child: Image.asset(
+                        widget.product.imagePath,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-
-           /* trailing: IconButton(
-                onPressed: removeItemFromCart,
-                icon: Icon(Icons.delete_outline_outlined, color: Colors.purple,)
-            ),
-
-            */
+              SizedBox(width: 12),
+              // Détails
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.product.name,
+                    style: AppTextStyles.headline3.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: (){
+                          cartProvider.decrementQuantity(widget.index);
+                        },
+                        icon: Icon(
+                            Icons.remove_circle_outline,
+                            color: Theme.of(context).colorScheme.primary
+                        ),
+                      ),
+                      Text(
+                        "x${widget.product.quantity.toString()}",
+                        style: TextStyle(
+                            fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: (){
+                          cartProvider.incrementQuantity(widget.index);
+                        },
+                        icon: Icon(
+                            Icons.add_circle_outline,
+                            color: Theme.of(context).colorScheme.primary
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Spacer(),
+              // Supprimer + Prix
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      cartProvider.removeItemFromCart(widget.product);
+                    },
+                    icon: Icon(Icons.delete, color: Colors.red),
+                  ),
+                  Text(
+                    '\$${widget.product.price!.toStringAsFixed(2)}',
+                    style: AppTextStyles.bodyText1.copyWith(
+                      fontSize: 17,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-      );
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/core/utils.dart';
 
+import 'appConfigSize.dart';
+
 
 class AppTextStyles {
   // Headlines

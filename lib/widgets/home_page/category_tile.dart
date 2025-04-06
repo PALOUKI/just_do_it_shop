@@ -5,7 +5,7 @@ import '../../models/Category.dart';
 class CategoryTile extends StatelessWidget {
   final List<Category> categories;
   final int index; // Ajout de l'index pour gérer les couleurs dynamiques
-  final List<Color> colors = [Colors.blue, Colors.green, Colors.orange];
+  final List<Color> colors = [ Colors.deepPurpleAccent, Colors.green, Colors.orange, Colors.blue,];
 
    CategoryTile({
     super.key,

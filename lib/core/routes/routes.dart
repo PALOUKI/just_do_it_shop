@@ -19,7 +19,7 @@ class Routes{
     switch(routeSettings.name){
       case RouteName.introPage:
         return MaterialPageRoute(builder: (_) => const IntroPage());
-      case RouteName.homePage:
+      case RouteName.navigation:
         final int selectedIndex = routeSettings.arguments as int;
         return MaterialPageRoute(builder: (_) =>  Navigation(selectedIndex: selectedIndex,));
       case RouteName.cartPage:

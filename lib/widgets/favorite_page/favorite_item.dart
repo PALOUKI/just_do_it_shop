@@ -1,62 +1,138 @@
 import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/models/Product.dart';
-
+import 'package:just_do_it_shop/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 import '../../core/core.dart';
 
-class FavoriteItem extends StatefulWidget {
-
+class FavoriteItem extends StatelessWidget {
   final Product product;
-  final void Function() onPressed;
+  final VoidCallback onPressed;
 
-  const FavoriteItem({super.key, required this.product, required this.onPressed});
+  const FavoriteItem({
+    super.key,
+    required this.product,
+    required this.onPressed,
+  });
 
-  @override
-  State<FavoriteItem> createState() => _FavoriteItemState();
-}
-
-class _FavoriteItemState extends State<FavoriteItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10, left: 15, right: 15),
-      decoration: BoxDecoration(
+
+    final cartProvider = Provider.of<CartProvider>(context);
+    void addProductToCart(Product product) {
+      cartProvider.toggleCartProducts(product);
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+          title: Text("Ajouter avec succès"),
+          content: Text("Vérifiez votre panier"),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                  context,
+                  RouteName.navigation,
+                  arguments: 2,
+                );
+              },
+              child: Text('Panier'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('ok'),
+            ),
+          ],
+        ),
+      );
+
+    }
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10, left: 15, right: 15),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
-          borderRadius: BorderRadius.circular(10)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: ListTile(
-          leading: Image.asset(
-            widget.product.imagePath,
-            fit: BoxFit.cover,
-          ),
-          title: Text(
-            widget.product.name,
-            style: AppTextStyles.subtitle1.copyWith(
-              color: Colors.grey[900],
-              fontWeight: FontWeight.bold,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 2),
             ),
-          ),
-          subtitle: Text(
-            '\$${widget.product.price!.toStringAsFixed(2)}',
-            style: AppTextStyles.bodyText1.copyWith(
-              color: Colors.grey.shade500,
-              fontWeight: FontWeight.w500,
-            ),
-            /*TextStyle(
-                color: Colors.grey.shade500,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image dans un cercle violet
+            SizedBox(
+              height: 70,
+              width: 70,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurpleAccent,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  Positioned(
+                    top: -8,
+                    left: -8,
+                    right: -8,
+                    bottom: -8,
+                    child: Image.asset(
+                      product.imagePath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
               ),
+            ),
 
-               */
-          ),
-          trailing: IconButton(
-              onPressed: widget.onPressed,
-              icon: Icon(Icons.remove_red_eye, color: Colors.grey[900],)
-          ),
+            SizedBox(width: getWidth(40)),
 
+            // Infos produit
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style: AppTextStyles.headline3.copyWith(
+                      color: Colors.grey[900],
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    '\$${product.price!.toStringAsFixed(2)}',
+                    style: AppTextStyles.subtitle1.copyWith(
+                      color: Colors.grey.shade500,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
+            // Icone Add to Cart
+            IconButton(
+              onPressed: () {
+                // Tu peux appeler ici une méthode pour ajouter au panier
+                addProductToCart(product);
+              },
+              icon: Icon(Icons.add_shopping_cart),
+              color: Theme.of(context).colorScheme.onPrimary,
+              tooltip: "Ajouter au panier",
+            ),
+          ],
         ),
       ),
     );
