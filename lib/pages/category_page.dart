@@ -30,11 +30,34 @@ class _CategoryPageState extends State<CategoryPage> {
                 padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                 child: Stack(
                   children: [
-                    Image.asset(
+                    Image.network(
                       widget.category.imagePath,
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: getHeight(300),
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          height: getHeight(300),
+                          width: double.infinity,
+                          color: Colors.grey[300],
+                          child: Icon(Icons.error_outline, color: Colors.grey[500]),
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: getHeight(300),
+                          width: double.infinity,
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     Positioned(
                       bottom: 0,

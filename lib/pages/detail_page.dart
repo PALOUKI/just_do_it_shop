@@ -74,9 +74,25 @@ class _DetailPageState extends State<DetailPage> {
                         shape: BoxShape.circle,
                         color: Colors.deepPurple.shade200,
                       ),
-                      child: Image.asset(
+                      child: Image.network(
                         widget.product.imagePath,
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: Icon(Icons.error_outline, color: Colors.grey[500]),
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -113,7 +129,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             Text(
-                              '\$${widget.product.price?.toStringAsFixed(2)}',
+                              '\$${widget.product.price.toStringAsFixed(2)}',
                               style: AppTextStyles.headline3.copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,

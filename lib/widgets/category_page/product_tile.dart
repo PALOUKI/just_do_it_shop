@@ -83,14 +83,14 @@ class ProductTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if(product.inStock != null && product.inStock == true)
+                  if(product.inStock)
                     Text(
                         "En Stock",
                       style: AppTextStyles.subtitle1.copyWith(
                         color: Theme.of(context).colorScheme.primary
                       ),
                     ),
-                  if(product.inStock != null && product.inStock == false)
+                  if(!product.inStock)
                     Text("Stock épuisé"),
                 ],
               ),
@@ -103,7 +103,7 @@ class ProductTile extends StatelessWidget {
                 children: [
                   //if (clothItem is Shoe || clothItem is Cloth || clothItem is Accessory)
                   Text(
-                    '\$${product.price?.toStringAsFixed(2)}',
+                    '\$${product.price.toStringAsFixed(2)}',
                     style: AppTextStyles.subtitle2.copyWith(
                         color: Colors.grey.shade500,
                       fontWeight: FontWeight.bold

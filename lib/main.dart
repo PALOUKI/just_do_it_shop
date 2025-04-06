@@ -3,9 +3,13 @@ import 'package:just_do_it_shop/core/core.dart';
 import 'package:just_do_it_shop/providers/favorite_provider.dart';
 import 'package:just_do_it_shop/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/cart_provider.dart';
+import 'services/supabase_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseService.initialize();
   runApp(
     MultiProvider(
       providers: [
@@ -20,7 +24,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).themeData,
-            initialRoute: RouteName.introPage,
+            initialRoute: RouteName.adminIntroPage,
             onGenerateRoute: Routes.onGenerateRoute,
           ),
     );

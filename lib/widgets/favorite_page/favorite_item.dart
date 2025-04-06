@@ -112,7 +112,7 @@ class FavoriteItem extends StatelessWidget {
                   ),
                   SizedBox(height: 6),
                   Text(
-                    '\$${product.price!.toStringAsFixed(2)}',
+                    '\$${product.price.toStringAsFixed(2)}',
                     style: AppTextStyles.subtitle1.copyWith(
                       color: Colors.grey.shade500,
                       fontWeight: FontWeight.w500,

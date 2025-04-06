@@ -5,6 +5,8 @@ import 'package:just_do_it_shop/pages/detail_page.dart';
 import 'package:just_do_it_shop/pages/home_page.dart';
 import 'package:just_do_it_shop/pages/category_page.dart';
 
+import '../../admin/pages/admin_intro_page.dart';
+import '../../admin/widgets/admin_navigation.dart';
 import '../../models/Category.dart';
 import '../../pages/cart_page.dart';
 import '../../pages/intro_page.dart';
@@ -38,6 +40,15 @@ class Routes{
             product: product,
           ),
         );
+        /*
+          Admin routes
+         */
+      case RouteName.adminNavigation:
+        final int selectedIndex = routeSettings.arguments as int;
+        return MaterialPageRoute(builder: (_) =>  AdminNavigation(selectedIndex: selectedIndex,));
+      case RouteName.adminIntroPage:
+        return MaterialPageRoute(builder: (_) => const AdminIntroPage());
+
       default:
         return MaterialPageRoute(builder: (_) => const
             Scaffold(
