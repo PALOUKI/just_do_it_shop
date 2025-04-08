@@ -24,9 +24,17 @@ class AdminHome extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                leading: const Icon(Icons.category),
-                title: const Text('Gérer les catégories'),
-                trailing: const Icon(Icons.arrow_forward_ios),
+                leading: const Icon(
+                    Icons.category,
+                  color: Colors.deepPurpleAccent,
+                ),
+                title: const Text(
+                    'Gérer les catégories',
+                  style: TextStyle(
+                    color: Colors.deepPurpleAccent,
+                  ),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurpleAccent,),
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.adminNavigation, arguments: 1);
                 },
@@ -35,9 +43,17 @@ class AdminHome extends StatelessWidget {
             const SizedBox(height: 16),
             Card(
               child: ListTile(
-                leading: const Icon(Icons.shopping_bag),
-                title: const Text('Gérer les produits'),
-                trailing: const Icon(Icons.arrow_forward_ios),
+                leading: const Icon(
+                    Icons.shopping_bag,
+                  color: Colors.deepPurpleAccent,
+                ),
+                title: const Text(
+                    'Gérer les produits',
+                  style: TextStyle(
+                    color: Colors.deepPurpleAccent,
+                  ),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, color: Colors.deepPurpleAccent,),
                 onTap: () {
                   Navigator.pushNamed(context, RouteName.adminNavigation, arguments: 2);
                 },

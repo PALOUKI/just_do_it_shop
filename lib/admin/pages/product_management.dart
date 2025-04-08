@@ -225,24 +225,24 @@ class _ProductManagementState extends State<ProductManagement> {
             children: [
               Center(
                 child: Text(
-                  'Gestion des cathégories',
+                  'Gérer des produits',
                   style: AppTextStyles.headline2.copyWith(
                       color: Theme.of(context).colorScheme.tertiary
                   ),
                 ),
               ),
               Card(
+                color: Theme.of(context).colorScheme.secondary,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
+                       Text(
                         'Nouveau produit',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.headline3.copyWith(
+                          color: Colors.deepPurpleAccent
+                        )
                       ),
                       const SizedBox(height: 16),
                       _categories.isEmpty
@@ -354,6 +354,7 @@ class _ProductManagementState extends State<ProductManagement> {
                       ),
                       const SizedBox(height: 16),
                       SwitchListTile(
+                        activeColor: Colors.deepPurpleAccent,
                         title: const Text('En stock'),
                         value: _inStock,
                         onChanged: (bool value) {
@@ -382,8 +383,12 @@ class _ProductManagementState extends State<ProductManagement> {
                         onPressed: _submitForm,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16),
+                          backgroundColor: Colors.deepPurpleAccent
                         ),
-                        child: const Text('Créer le produit'),
+                        child: Text(
+                            'Créer le produit',
+                          style: AppTextStyles.button
+                        ),
                       ),
                     ],
                   ),
@@ -420,6 +425,7 @@ class _ProductManagementState extends State<ProductManagement> {
                       ),
                     );
                     return Card(
+                      color: Theme.of(context).colorScheme.secondary,
                       margin: const EdgeInsets.only(bottom: 16),
                       child: ListTile(
                         leading: ClipRRect(

@@ -61,5 +61,8 @@ class CartProvider with ChangeNotifier {
     return Provider.of<CartProvider>(context, listen: listen);
   }
 
-
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
 }

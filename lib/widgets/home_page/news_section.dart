@@ -13,7 +13,7 @@ class _NewsSectionState extends State<NewsSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height:  MediaQuery.of(context).orientation == Orientation.portrait ? getHeight(160) : getHeight(320),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
@@ -40,7 +40,7 @@ class _NewsSectionState extends State<NewsSection> {
                   child: Image.asset(
                     AssetsConstants.cloth1,
                     fit: BoxFit.cover,
-                    width: 100,
+                    width: getWidth(100),
                     height: double.infinity,
                   ),
                 ),
@@ -83,7 +83,7 @@ class _NewsSectionState extends State<NewsSection> {
           ),
           Container(
             width: MediaQuery.of(context).size.width/1.15,
-            height: 150,
+            height: getHeight(150),
             margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.orange, // Conserver le fond rouge

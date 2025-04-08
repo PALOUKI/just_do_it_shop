@@ -8,8 +8,11 @@ import 'package:just_do_it_shop/pages/category_page.dart';
 import '../../admin/pages/admin_intro_page.dart';
 import '../../admin/widgets/admin_navigation.dart';
 import '../../models/Category.dart';
+import '../../pages/auth/login_page.dart';
+import '../../pages/auth/signup_page.dart';
 import '../../pages/cart_page.dart';
 import '../../pages/intro_page.dart';
+import '../../pages/profile_page.dart';
 import '../../widgets/navigation.dart';
 
 
@@ -40,9 +43,16 @@ class Routes{
             product: product,
           ),
         );
-        /*
-          Admin routes
-         */
+      
+      // Auth routes
+      case RouteName.login:
+        return MaterialPageRoute(builder: (_) => const LoginPage());
+      case RouteName.signup:
+        return MaterialPageRoute(builder: (_) => const SignupPage());
+      case RouteName.profile:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
+      
+      // Admin routes
       case RouteName.adminNavigation:
         final int selectedIndex = routeSettings.arguments as int;
         return MaterialPageRoute(builder: (_) =>  AdminNavigation(selectedIndex: selectedIndex,));

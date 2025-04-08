@@ -34,7 +34,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       widget.category.imagePath,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      height: getHeight(300),
+                      height:  MediaQuery.of(context).orientation == Orientation.portrait ? getHeight(300) : getHeight(400),
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           height: getHeight(300),
@@ -64,7 +64,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       left: 0,
                       right: 0,
                       child: Container(
-                        height: getHeight(120),
+                        height:  MediaQuery.of(context).orientation == Orientation.portrait ? getHeight(120) : getHeight(180),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
