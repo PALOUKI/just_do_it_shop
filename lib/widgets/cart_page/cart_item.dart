@@ -105,6 +105,7 @@ class _CartItemState extends State<CartItem> {
                       IconButton(
                         onPressed: (){
                           cartProvider.decrementQuantity(widget.index);
+                          setState(() {}); // Force UI update
                         },
                         icon: Icon(
                             Icons.remove_circle_outline,
@@ -112,7 +113,7 @@ class _CartItemState extends State<CartItem> {
                         ),
                       ),
                       Text(
-                        "x${widget.product.quantity.toString()}",
+                        "x${cartProvider.getQuantity(widget.product)}",
                         style: TextStyle(
                             fontSize: 16,
                           color: Theme.of(context).colorScheme.primary,
@@ -122,6 +123,7 @@ class _CartItemState extends State<CartItem> {
                       IconButton(
                         onPressed: (){
                           cartProvider.incrementQuantity(widget.index);
+                          setState(() {}); // Force UI update
                         },
                         icon: Icon(
                             Icons.add_circle_outline,

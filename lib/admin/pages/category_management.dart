@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import '../../core/core.dart';
 import '../../models/Category.dart';
 import '../../services/supabase_service.dart';
@@ -110,12 +109,6 @@ class _CategoryManagementState extends State<CategoryManagement> {
             );
             return;
           }
-          if (_selectedImage == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Veuillez sélectionner une image')),
-            );
-            return;
-          }
           final category = Category(
             name: _nameController.text,
             description: _descriptionController.text,
@@ -159,7 +152,7 @@ class _CategoryManagementState extends State<CategoryManagement> {
             children: [
               Center(
                 child: Text(
-                  'Gestion des cathégories',
+                  'Gérer des cathégories',
                   style: AppTextStyles.headline2.copyWith(
                       color: Theme.of(context).colorScheme.tertiary
                   ),
@@ -171,12 +164,11 @@ class _CategoryManagementState extends State<CategoryManagement> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
-                        'Nouvelle catégorie',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Text(
+                          'Nouvelle cathégorie',
+                          style: AppTextStyles.headline3.copyWith(
+                              color: Colors.deepPurpleAccent
+                          )
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -227,8 +219,14 @@ class _CategoryManagementState extends State<CategoryManagement> {
                         onPressed: _submitForm,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16),
+                            backgroundColor: Colors.deepPurpleAccent
                         ),
-                        child: Text(_isEditing ? 'Modifier la catégorie' : 'Créer la catégorie'),
+                        child: Text(
+                            _isEditing
+                                ? 'Modifier la catégorie'
+                                : 'Créer la catégorie',
+                            style: AppTextStyles.button
+                        ),
                       ),
                     ],
                   ),

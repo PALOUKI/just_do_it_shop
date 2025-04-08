@@ -93,7 +93,7 @@ class _AdminNavigationState extends State<AdminNavigation> {
             Center(
               child: Image.asset(
                 "assets/images/nike_loo.png",
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.deepPurpleAccent,
               ),
             ),
             Expanded(
@@ -102,27 +102,36 @@ class _AdminNavigationState extends State<AdminNavigation> {
                 children: [
                   Column(
                     children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.home,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        title: Text(
-                          "Home",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(
+                              context,
+                            RouteName.navigation,
+                            arguments: 0
+                          );
+                        },
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.home,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          title: Text(
+                            "Voir shop",
+                            style: TextStyle(
+                                color: Colors.deepPurpleAccent,
+                            ),
                           ),
                         ),
                       ),
                       ListTile(
                         leading: Icon(
                           Icons.info,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Colors.deepPurpleAccent,
                         ),
                         title: Text(
                           "A propos",
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Colors.deepPurpleAccent,
                           ),
                         ),
                       ),
@@ -138,6 +147,7 @@ class _AdminNavigationState extends State<AdminNavigation> {
                       "Se déconnecter",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ),

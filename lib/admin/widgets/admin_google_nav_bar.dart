@@ -53,8 +53,8 @@ class _AdminGoogleNavBarState extends State<AdminGoogleNavBar> {
               text: 'Produits',
             ),
             GButton(
-              icon: Icons.account_circle_outlined,
-              text: 'Profile',
+              icon: Icons.keyboard_command_key_sharp,
+              text: 'Bilan',
             ),
           ]
       ),

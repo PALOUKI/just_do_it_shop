@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:just_do_it_shop/core/core.dart';
-import 'package:just_do_it_shop/pages/home_page.dart';
-
-import '../widgets/navigation.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -12,6 +10,28 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    // 🔐 Forcer l'orientation portrait uniquement
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    // 🔄 Réinitialiser l'orientation à la normale quand on quitte la page
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     AppConfigSize.init(context);

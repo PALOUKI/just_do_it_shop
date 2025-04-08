@@ -4,6 +4,7 @@ import 'package:just_do_it_shop/pages/cart_page.dart';
 import 'package:just_do_it_shop/pages/favorite_page.dart';
 import 'package:just_do_it_shop/pages/home_page.dart';
 import 'package:just_do_it_shop/pages/profile_page.dart';
+import 'package:just_do_it_shop/providers/auth_provider.dart';
 import 'package:just_do_it_shop/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -106,64 +107,139 @@ class _NavigationState extends State<Navigation> {
       ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        child: Column(
-          children: [
-            //TODO: put the nike logo image
-            Center(
-              child: Image.asset(
-                "assets/images/nike_loo.png",
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
+        child: Consumer<AuthProvider>(
+          builder: (context, auth, child) {
+            return Column(
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Column(
                     children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.home,
+                      Center(
+                        child: Image.asset(
+                          "assets/images/nike_loo.png",
                           color: Theme.of(context).colorScheme.primary,
                         ),
-                        title: Text(
-                          "Home",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                      ),
+                      if (auth.isAuthenticated) ...[  
+                        const SizedBox(height: 16),
+                        Text(
+                          auth.currentUser?.fullName ?? '',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.info,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        title: Text(
-                          "About",
+                        Text(
+                          auth.currentUser?.email ?? '',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.8),
                           ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
-                  //TODO: put logout
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    title: Text(
-                      "Logout",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          ListTile(
+                            leading: Icon(
+                              Icons.home,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            title: Text(
+                              "Accueil",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                              onTabChange(0);
+                            },
+                          ),
+                          if (auth.isAuthenticated) ...[  
+                            ListTile(
+                              leading: Icon(
+                                Icons.person,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              title: Text(
+                                "Mon Profil",
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                                onTabChange(3);
+                              },
+                            ),
+                          ],
+                          ListTile(
+                            leading: Icon(
+                              Icons.info,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            title: Text(
+                              "À propos",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
                       ),
-                    ),
+                      if (auth.isAuthenticated)
+                        ListTile(
+                          leading: Icon(
+                            Icons.logout,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          title: Text(
+                            "Déconnexion",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          onTap: () {
+                            auth.signOut();
+                            Navigator.pop(context);
+                          },
+                        )
+                      else
+                        ListTile(
+                          leading: Icon(
+                            Icons.login,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          title: Text(
+                            "Connexion",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, RouteName.login);
+                          },
+                        ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: GoogleNavBar(
