@@ -124,8 +124,9 @@ class _DetailPageState extends State<DetailPage> {
                           children: [
                             Text(
                               widget.product.name.toUpperCase(),
-                              style: AppTextStyles.headline3.copyWith(
+                              style: AppTextStyles.subtitle1.copyWith(
                                 color: Colors.black,
+
                               ),
                             ),
                             Text(
@@ -133,7 +134,6 @@ class _DetailPageState extends State<DetailPage> {
                               style: AppTextStyles.headline3.copyWith(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: getSize(25),
                               ),
                             ),
                           ],
@@ -163,8 +163,9 @@ class _DetailPageState extends State<DetailPage> {
                               children: [
                                 Text(
                                   "Apprécier",
-                                  style: AppTextStyles.headline3.copyWith(
-                                    color: Colors.black,
+                                  style: AppTextStyles.subtitle1.copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],
@@ -203,9 +204,10 @@ class _DetailPageState extends State<DetailPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Pointures disponibles",
-                                  style: AppTextStyles.headline3.copyWith(
-                                    color: Colors.black,
+                                  "Tailles disponibles",
+                                  style: AppTextStyles.subtitle1.copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],
@@ -232,8 +234,9 @@ class _DetailPageState extends State<DetailPage> {
                               children: [
                                 Text(
                                   "Couleurs disponibles",
-                                  style: AppTextStyles.headline3.copyWith(
+                                  style: AppTextStyles.subtitle1.copyWith(
                                     color: Colors.black,
+                                    fontWeight: FontWeight.bold
                                   ),
                                 ),
                               ],

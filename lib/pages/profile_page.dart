@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:just_do_it_shop/core/appConfigSize.dart';
+import 'package:just_do_it_shop/core/appStyles.dart';
 import 'package:provider/provider.dart';
 import '../models/order_model.dart';
 import '../providers/auth_provider.dart';
@@ -18,6 +20,9 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _phoneController;
   late TextEditingController _addressController;
   bool _isEditing = false;
+
+
+
 
   @override
   void initState() {
@@ -86,46 +91,68 @@ class _ProfilePageState extends State<ProfilePage> {
         }
 
         final user = auth.currentUser!;
+        var firstLetter = (user.fullName?.isNotEmpty ?? false)
+            ? user.fullName!.substring(0, 1).toUpperCase()
+            : '';
+
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Mon Profil'),
-            actions: [
-              IconButton(
-                icon: Icon(_isEditing ? Icons.close : Icons.edit),
-                onPressed: () {
-                  setState(() => _isEditing = !_isEditing);
-                  if (!_isEditing) {
-                    _initControllers(context);
-                  }
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () => auth.signOut(),
-              ),
-            ],
-          ),
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /*
+                Container(
+                  //color: Theme.of(context).colorScheme.surface,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(_isEditing ? Icons.close : Icons.edit),
+                        onPressed: () {
+                          setState(() => _isEditing = !_isEditing);
+                          if (!_isEditing) {
+                            _initControllers(context);
+                          }
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.logout),
+                        onPressed: () => auth.signOut(),
+                      ),
+                    ],
+                  ),
+                ),
+
+                 */
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.logout),
+                            onPressed: () => auth.signOut(),
+                          ),
+                        ],
+                      ),
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         child: Text(
-                          user.fullName[0].toUpperCase(),
+                          firstLetter,
                           style: TextStyle(
                             fontSize: 40,
-                            color: Theme.of(context).colorScheme.onPrimary,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                       ),
@@ -135,6 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           user.fullName,
                           style: const TextStyle(
                             fontSize: 24,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -152,6 +180,46 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
+                //Container for profile editing
+                Container(
+                    margin: EdgeInsets.all(getSize(14)),
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 2),
+                      ),
+                    ]
+                    
+                    
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.manage_accounts_rounded),
+                      Text(
+                          "Modifier le profil",
+                        style: AppTextStyles.subtitle2.copyWith(
+                          color: Colors.black,
+
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(_isEditing ? Icons.close : Icons.edit),
+                        onPressed: () {
+                          setState(() => _isEditing = !_isEditing);
+                          if (!_isEditing) {
+                            _initControllers(context);
+                          }
+                        },
+                      ),
+                    ],
+                  )
+                  ),
                 if (_isEditing)
                   Padding(
                     padding: const EdgeInsets.all(16),

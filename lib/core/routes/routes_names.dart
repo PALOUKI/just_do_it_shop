@@ -6,6 +6,7 @@ class RouteName{
   static const String categoryPage = "/categoryPage";
   static const String navigation = "/homePage"; //homePage
   static const String detailPage = "/detailPage";
+  static const String seeAllProducts = "/seeAllProducts";
   
   // Auth Routes
   static const String login = "/login";
@@ -17,5 +18,6 @@ class RouteName{
    */
   static const String adminNavigation = "/adminHomePage";
   static const String adminIntroPage = "adminIntroPage";
+  static const String adminLogin = "adminLogin";
 }
 

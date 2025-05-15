@@ -9,6 +9,7 @@ ThemeData lightMode = ThemeData(
     tertiary:  Colors.grey.shade500,
     onPrimary: Colors.deepPurpleAccent,
     onSecondary: Colors.white,
+    onTertiary: Colors.deepPurpleAccent,
   )
 );
 
@@ -24,5 +25,6 @@ ThemeData darkMode = ThemeData(
         tertiary: Colors.grey.shade700,
         onPrimary: Colors.white,
         onSecondary: Colors.grey.shade700,
+      onTertiary: Colors.grey.shade900,
     ),
 );

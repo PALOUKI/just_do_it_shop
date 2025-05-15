@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/core/core.dart';
 import 'package:just_do_it_shop/widgets/home_page/category_tile.dart';
 import 'package:just_do_it_shop/widgets/home_page/news_section.dart';
+import 'package:redacted/redacted.dart';
 import '../models/Category.dart';
 import '../services/supabase_service.dart';
+import '../widgets/search_bar_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -72,39 +74,14 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: getWidth(200),
-                      child: TextFormField(
-                        controller: _searchController,
-                        onChanged: filterCategories,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Rechercher",
-                          hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                        ),
-                      ),
-                    ),
-        
-                    const Icon(
-                        Icons.search,
-                        color: Colors.deepPurpleAccent
-                    ),
-                  ],
-                ),
-              ),
+
+            //search part
+            CustomSearchBar(
+              isLoading: _isLoading,
+              controller: _searchController,
+              onChanged: filterCategories,
             ),
+
             const SizedBox(height: 10),
             Text(
               "Everyone flies... Some fly longer than others",
@@ -127,9 +104,14 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 20,
                     ),
                   ),
-                  const Text(
-                    "Voir tout",
-                    style: TextStyle(color: Colors.deepPurpleAccent)
+                   TextButton(
+                    child: Text(
+                        "Voir tout",
+                        style: TextStyle(color: Colors.deepPurpleAccent)
+                    ),
+                     onPressed: (){
+                      Navigator.pushNamed(context, RouteName.seeAllProducts);
+                     },
                   ),
                 ],
               ),
@@ -163,11 +145,25 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             _isLoading
-                ? const Center(child: CircularProgressIndicator())
+                        ? SizedBox(
+              height: 220, // Ajustez la hauteur en fonction de votre CategoryTile
+              child: ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 3, // Nombre de placeholders à afficher pendant le chargement
+                itemBuilder: (context, index) => CategoryTile(
+                  categories: [], // La liste n'est pas nécessaire en mode redacted
+                  index: index,
+                  isRedacted: true, // Indique au CategoryTile d'afficher sa version redacted
+                ),
+                separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(width: 10),
+              ),
+            )
                 : _categories.isEmpty
                     ? const Center(child: Text('Aucune catégorie disponible'))
                     :
-            ListView.separated(
+             ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: _filteredCategories.length,

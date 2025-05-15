@@ -11,16 +11,6 @@ class AuthService {
     try {
       print('Tentative d\'inscription avec email: $email');
 
-      // Vérifier si l'utilisateur existe déjà
-      final existing = await SupabaseService.supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-
-      if (existing.user != null) {
-        print('L\'utilisateur existe déjà');
-        return true;
-      }
 
       final response = await SupabaseService.supabase.auth.signUp(
         email: email,
@@ -49,8 +39,12 @@ class AuthService {
       }
       return false;
     } catch (e) {
-      print('Error signing up: $e');
+      print('=============================================');
+      print('ERREUR DÉTAILLÉE D\'INSCRIPTION:');
+      print('Type d\'erreur: ${e.runtimeType}');
+      print('Message d\'erreur: $e');
       print('Stack trace: ${StackTrace.current}');
+      print('=============================================');
       return false;
     }
   }

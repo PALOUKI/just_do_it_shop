@@ -32,12 +32,22 @@ class _AdminIntroPageState extends State<AdminIntroPage> {
             SizedBox(height: 40,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Text(
-                "Brand new sneakers and custom kikcs made with premium quality",
-                style: TextStyle(
-                  color: Colors.grey[500],
-                ),
-              ),
+              child: Column(
+                children: [
+                  Text(
+                    "Gestions des stocks de vêtements et administration",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  Text(
+                    "des commandes",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                ],
+              )
             ),
             SizedBox(height: 60,),
             Container(
@@ -52,12 +62,11 @@ class _AdminIntroPageState extends State<AdminIntroPage> {
                   onPressed: (){
                     Navigator.pushNamed(
                         context,
-                        RouteName.adminNavigation,
-                        arguments: 0
+                        RouteName.adminLogin,
                     );
                   },
                   child: Text(
-                    "Shop now",
+                    "Commencer",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.secondary
