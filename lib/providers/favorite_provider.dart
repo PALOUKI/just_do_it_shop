@@ -20,6 +20,11 @@ class FavoriteProvider extends ChangeNotifier{
     }
     notifyListeners();
   }
+  //remove to favorites
+  void removeFromFavorite(Product product){
+      favoriteProducts.remove(product);
+    notifyListeners();
+  }
 
   bool isExist(Product product){
     final isExist = favoriteProducts.contains(product);

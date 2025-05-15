@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/admin/pages/admin_home.dart';
+import 'package:just_do_it_shop/admin/pages/sold_product.dart';
 import 'package:just_do_it_shop/admin/widgets/admin_google_nav_bar.dart';
 import 'package:just_do_it_shop/core/core.dart';
 import 'package:just_do_it_shop/pages/profile_page.dart';
@@ -25,7 +26,7 @@ class _AdminNavigationState extends State<AdminNavigation> {
     });
   }
 
-  List _pages = [AdminHome(), CategoryManagement(), ProductManagement(), ProfilePage()];
+  List _pages = [AdminHome(), CategoryManagement(), ProductManagement(), SoldProduct()];
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +91,20 @@ class _AdminNavigationState extends State<AdminNavigation> {
         child: Column(
           children: [
             //TODO: put the nike logo image
-            Center(
-              child: Image.asset(
-                "assets/images/nike_loo.png",
+            Expanded(
+              flex: 1,
+              child: Container(
                 color: Colors.deepPurpleAccent,
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/nike_loo.png",
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
               ),
             ),
             Expanded(
+              flex: 2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -113,12 +121,12 @@ class _AdminNavigationState extends State<AdminNavigation> {
                         child: ListTile(
                           leading: Icon(
                             Icons.home,
-                            color: Colors.deepPurpleAccent,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
                             "Voir shop",
                             style: TextStyle(
-                                color: Colors.deepPurpleAccent,
+                                color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
@@ -126,28 +134,36 @@ class _AdminNavigationState extends State<AdminNavigation> {
                       ListTile(
                         leading: Icon(
                           Icons.info,
-                          color: Colors.deepPurpleAccent,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                         title: Text(
                           "A propos",
                           style: TextStyle(
-                            color: Colors.deepPurpleAccent,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
                     ],
                   ),
                   //TODO: put logout
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    title: Text(
-                      "Se déconnecter",
-                      style: TextStyle(
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(
+                          context,
+                          RouteName.adminIntroPage
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.logout,
                         color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold
+                      ),
+                      title: Text(
+                        "Se déconnecter",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     ),
                   ),

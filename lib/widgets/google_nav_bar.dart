@@ -28,14 +28,14 @@ class _GoogleNavBarState extends State<GoogleNavBar> {
           tabBorderRadius: 15,
           tabActiveBorder: Border.all(color: Colors.white, width: 1), // tab button border
           tabBorder: Border.all(color: Colors.grey, width: 1), // tab button border
-          tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
+          //tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
           curve: Curves.easeOutExpo, // tab animation curves
           duration: Duration(milliseconds: 900), // tab animation duration
           gap: 8, // the tab button gap between icon and text
           color: Colors.grey[800], // unselected icon color
-          activeColor: Colors.deepPurpleAccent, // selected icon and text color
+          activeColor: Theme.of(context).colorScheme.onPrimary, // selected icon and text color
           iconSize: 24, // tab button icon size
-          tabBackgroundColor: Colors.white, // selected tab background color
+          tabBackgroundColor: Theme.of(context).colorScheme.onSecondary,// selected tab background color
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5), // navigation bar padding
           onTabChange: widget.onTabChange,
           selectedIndex: widget.selectedIndex,

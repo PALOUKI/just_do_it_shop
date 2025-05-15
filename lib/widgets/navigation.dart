@@ -109,107 +109,129 @@ class _NavigationState extends State<Navigation> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         child: Consumer<AuthProvider>(
           builder: (context, auth, child) {
+            final bool isAuthenticated = auth.isAuthenticated;
+            final user = auth.currentUser;
+            
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          "assets/images/nike_loo.png",
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                // En-tête avec seulement le logo
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.deepPurpleAccent,
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/nike_loo.png",
+                        color: Theme.of(context).colorScheme.secondary,
+                        width: 250,
+                        height: 250,
                       ),
-                      if (auth.isAuthenticated) ...[  
-                        const SizedBox(height: 16),
-                        Text(
-                          auth.currentUser?.fullName ?? '',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          auth.currentUser?.email ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.8),
-                          ),
-                        ),
-                      ],
-                    ],
+                    ),
                   ),
                 ),
+
+                // Email centré uniquement si connecté
+                if (isAuthenticated)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    child: Center(
+                      child: Text(
+                        user?.email ?? '',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+
+                // Contenu principal
                 Expanded(
+                  flex: 2,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          ListTile(
-                            leading: Icon(
-                              Icons.home,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            title: Text(
-                              "Accueil",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                              onTabChange(0);
-                            },
-                          ),
-                          if (auth.isAuthenticated) ...[  
-                            ListTile(
-                              leading: Icon(
-                                Icons.person,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              title: Text(
-                                "Mon Profil",
-                                style: TextStyle(
+                      // Liste des options avec défilement
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            // Nom d'utilisateur en première position si connecté
+                           /*
+                            if (isAuthenticated)
+                              ListTile(
+                                leading: Icon(
+                                  Icons.person,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
+                                title: Text(
+                                  (user?.fullName != null && user!.fullName.isNotEmpty)
+                                    ? user.fullName
+                                    : 'Utilisateur',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
                               ),
+
+                            */
+                            // Options communes
+                            ListTile(
+                              leading: Icon(
+                                Icons.home_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              title: Text("Accueil"),
                               onTap: () {
                                 Navigator.pop(context);
-                                onTabChange(3);
+                                onTabChange(0);
+                              },
+                            ),
+
+                            // Option Mon Profil uniquement si connecté
+                            if (isAuthenticated)
+                              ListTile(
+                                leading: Icon(
+                                  Icons.person_outlined,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                title: Text("Mon Profil"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  onTabChange(3);
+                                },
+                              ),
+
+                            // À propos pour tous
+                            ListTile(
+                              leading: Icon(
+                                Icons.info_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              title: Text("À propos"),
+                              onTap: () {
+                                Navigator.pop(context);
                               },
                             ),
                           ],
-                          ListTile(
-                            leading: Icon(
-                              Icons.info,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            title: Text(
-                              "À propos",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                      if (auth.isAuthenticated)
+
+                      // Divider avant le bouton du bas
+                      Divider(),
+
+                      // Bouton du bas: Déconnexion OU Connexion
+                      if (isAuthenticated)
                         ListTile(
                           leading: Icon(
                             Icons.logout,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.error,
                           ),
                           title: Text(
                             "Déconnexion",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Theme.of(context).colorScheme.error,
                             ),
                           ),
                           onTap: () {
@@ -220,15 +242,10 @@ class _NavigationState extends State<Navigation> {
                       else
                         ListTile(
                           leading: Icon(
-                            Icons.login,
+                            Icons.person_add_outlined,
                             color: Theme.of(context).colorScheme.primary,
                           ),
-                          title: Text(
-                            "Connexion",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
+                          title: Text("Créer un compte"),
                           onTap: () {
                             Navigator.pop(context);
                             Navigator.pushNamed(context, RouteName.login);

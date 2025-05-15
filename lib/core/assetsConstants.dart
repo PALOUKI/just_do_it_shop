@@ -43,6 +43,13 @@ class AssetsConstants{
         static const String acs3 = "$_img$_accessories/trois.png";
         static const String acs4 = "$_img$_accessories/quatre.png";
 
+        /*
+          Accessories
+         */
+        static const String inStock = "$_img/inStock.png";
+        static const String outOfStock = "$_img/outOfStock.png";
+
+
 
   /*
     SVG

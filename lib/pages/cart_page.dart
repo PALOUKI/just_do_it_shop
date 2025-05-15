@@ -30,7 +30,6 @@ class CartPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
             Expanded(
               flex: 2,
               child: ListView.builder(
@@ -84,7 +83,7 @@ class CartPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
-                      height: 54,
+                      height: getHeight(54),
                       child: ElevatedButton(
                         onPressed: () async {
                           final authProvider = context.read<AuthProvider>();
@@ -131,7 +130,7 @@ class CartPage extends StatelessWidget {
                           backgroundColor:
                               Theme.of(context).colorScheme.primary,
                           foregroundColor:
-                              Theme.of(context).colorScheme.onPrimary,
+                              Theme.of(context).colorScheme.secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),

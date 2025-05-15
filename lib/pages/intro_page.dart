@@ -55,7 +55,7 @@ class _IntroPageState extends State<IntroPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Text(
-                  "Brand new sneakers and custom kikcs made with premium quality",
+                "Des baskets flambant neuves et des modèles personnalisés fabriqués avec une qualité premium.",
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),

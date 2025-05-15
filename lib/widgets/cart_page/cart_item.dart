@@ -28,7 +28,7 @@ class _CartItemState extends State<CartItem> {
         builder: (context, cartProvider, child)
         => Container(
           padding: EdgeInsets.all(12),
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.onSecondary,
             borderRadius: BorderRadius.circular(16),
@@ -74,11 +74,11 @@ class _CartItemState extends State<CartItem> {
                     ),
                     // Image qui peut dépasser
                     Positioned(
-                      top: -10, // Tu peux ajuster le débordement ici
+                      top: -15, // Tu peux ajuster le débordement ici
                       left: -10,
                       right: -10,
-                      bottom: -10,
-                      child: Image.asset(
+                      bottom: -15,
+                      child: Image.network(
                         widget.product.imagePath,
                         fit: BoxFit.contain,
                       ),
@@ -90,14 +90,19 @@ class _CartItemState extends State<CartItem> {
               SizedBox(width: 12),
               // Détails
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.product.name,
-                    style: AppTextStyles.headline3.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.product.name,
+                        style: AppTextStyles.headline3.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 8),
                   Row(
@@ -148,7 +153,7 @@ class _CartItemState extends State<CartItem> {
                     '\$${widget.product.price.toStringAsFixed(2)}',
                     style: AppTextStyles.bodyText1.copyWith(
                       fontSize: 17,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

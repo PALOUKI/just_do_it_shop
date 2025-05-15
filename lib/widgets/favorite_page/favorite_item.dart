@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_do_it_shop/models/Product.dart';
 import 'package:just_do_it_shop/providers/cart_provider.dart';
+import 'package:just_do_it_shop/providers/favorite_provider.dart';
 import 'package:provider/provider.dart';
 import '../../core/core.dart';
 
@@ -17,38 +18,12 @@ class FavoriteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final cartProvider = Provider.of<CartProvider>(context);
-    void addProductToCart(Product product) {
-      cartProvider.toggleCartProducts(product);
-      showDialog(
-        context: context,
-        builder:
-            (context) => AlertDialog(
-          title: Text("Ajouter avec succès"),
-          content: Text("Vérifiez votre panier"),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(
-                  context,
-                  RouteName.navigation,
-                  arguments: 2,
-                );
-              },
-              child: Text('Panier'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('ok'),
-            ),
-          ],
-        ),
-      );
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
 
+    void removeFormFavorites(Product product){
+      favoriteProvider.removeFromFavorite(product);
     }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -82,11 +57,11 @@ class FavoriteItem extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: -8,
-                    left: -8,
-                    right: -8,
-                    bottom: -8,
-                    child: Image.asset(
+                    top: -10,
+                    left: -10,
+                    right: -10,
+                    bottom: -10,
+                    child: Image.network(
                       product.imagePath,
                       fit: BoxFit.contain,
                     ),
@@ -111,13 +86,25 @@ class FavoriteItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 6),
-                  Text(
-                    '\$${product.price.toStringAsFixed(2)}',
-                    style: AppTextStyles.subtitle1.copyWith(
-                      color: Colors.grey.shade500,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'prix: ',
+                        style: AppTextStyles.subtitle1.copyWith(
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '\$${product.price.toStringAsFixed(2)}',
+                        style: AppTextStyles.subtitle1.copyWith(
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -126,9 +113,9 @@ class FavoriteItem extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // Tu peux appeler ici une méthode pour ajouter au panier
-                addProductToCart(product);
+                removeFormFavorites(product);
               },
-              icon: Icon(Icons.add_shopping_cart),
+              icon: Icon(Icons.delete, color: Colors.red,),
               color: Theme.of(context).colorScheme.onPrimary,
               tooltip: "Ajouter au panier",
             ),
